@@ -2,7 +2,7 @@
   <a-layout class="home">
     <a-layout-header>
       <div>
-        <div>找实习timeline</div>
+        <div>找工作timeline</div>
         <div>tb74***2542</div>
       </div>
     </a-layout-header>
@@ -16,11 +16,11 @@
         >
           <a-menu-item key="1">
             <a-icon type="user" />
-            <span>个人首页</span>
+            <span>进度首页</span>
           </a-menu-item>
           <a-menu-item key="2">
             <a-icon type="menu" />
-            <span>管理中心</span>
+            <span>个人简历</span>
           </a-menu-item>
         </a-menu>
       </a-layout-sider>
