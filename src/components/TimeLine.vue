@@ -8,6 +8,7 @@
             :columns="columns"
             :data-source="data"
             :expandIcon="expandIcon"
+            :pagination="false"
           >
             <a slot="action" slot-scope="text, record">
               <a @click="updateProgress(text, record)">更新流程</a>
@@ -35,6 +36,13 @@
             </p>
           </a-table>
         </div>
+      </div>
+    </div>
+
+    <div class="finished">
+      <div class="tableTitle">已结束</div>
+      <div class="tableContent">
+        <div class="finishTable"></div>
       </div>
     </div>
 
@@ -80,7 +88,10 @@
         :wrapper-col="wrapperCol"
       >
         <a-form-model-item label="新状态">
-          <a-select v-model="statusForm.status" placeholder="请选择新的流程状态">
+          <a-select
+            v-model="statusForm.status"
+            placeholder="请选择新的流程状态"
+          >
             <a-select-option value="finish"> 通过 </a-select-option>
             <a-select-option value="error"> 不通过 </a-select-option>
           </a-select>
@@ -92,22 +103,51 @@
 
 <script>
 const columns = [
-  { title: "公司部门", dataIndex: "department", key: "department" },
-  { title: "申请日期", dataIndex: "appTime", key: "appTime" },
-  { title: "当前状态", dataIndex: "status", key: "status" },
+  {
+    title: "公司部门",
+    dataIndex: "department",
+    key: "department",
+    align: "center",
+    width: 260,
+    ellipsis: true,
+  },
+  {
+    title: "职位",
+    dataIndex: "post",
+    key: "post",
+    align: "center",
+    width: 180,
+  },
+  {
+    title: "申请日期",
+    dataIndex: "appTime",
+    key: "appTime",
+    align: "center",
+    width: 160,
+  },
+  {
+    title: "当前状态",
+    dataIndex: "status",
+    key: "status",
+    align: "center",
+    width: 120,
+  },
   {
     title: "操作",
     dataIndex: "",
     key: "x",
     scopedSlots: { customRender: "action" },
+    align: "center",
+    width: 220,
   },
 ];
 
 let data = [
   {
     key: 1,
-    department: "John Brown",
-    appTime: 32,
+    post: "前端开发实习生",
+    department: "阿里集团-淘天集团-技术线-体验技术",
+    appTime: "2020-5-12",
     timeline: [
       {
         title: "简历投递",
@@ -115,12 +155,13 @@ let data = [
       },
     ],
     current: 0,
-    status: "finish",
+    status: "一面进行中",
   },
   {
     key: 2,
-    department: "John Brown",
-    appTime: 32,
+    post: "前端开发实习生",
+    department: "阿里集团-淘天集团-技术线-体验技术",
+    appTime: "2020-5-12",
     timeline: [
       {
         title: "简历投递",
@@ -218,7 +259,7 @@ export default {
                 time: myDate,
               });
               item.current++;
-              item.status = 'process';
+              item.status = "process";
             }
           });
           this.$refs.ruleForm.resetFields();
@@ -232,7 +273,7 @@ export default {
     changeStatus() {
       this.$refs.statusForm.validate((valid) => {
         if (valid) {
-          console.log('this.statusForm', this.statusForm);
+          console.log("this.statusForm", this.statusForm);
           this.data.forEach((item) => {
             if (item.key === this.record.key) {
               item.status = this.statusForm.status;
@@ -278,6 +319,35 @@ export default {
       border-bottom-right-radius: 3px;
 
       .myTable {
+        padding: 30px;
+      }
+    }
+  }
+
+  .finished {
+    margin: 20px;
+
+    .tableTitle {
+      height: 40px;
+      line-height: 40px;
+      background-color: #fff;
+      margin-bottom: 3px;
+      color: rgba(0, 0, 0, 0.8);
+      font-size: 14px;
+      font-weight: 700;
+      text-overflow: ellipsis;
+      padding: 0 24px;
+      // border-bottom: 1px solid rgba(31, 56, 88, 0.1);
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+    }
+
+    .tableContent {
+      background-color: #fff;
+      border-bottom-left-radius: 3px;
+      border-bottom-right-radius: 3px;
+
+      .finishTable {
         padding: 30px;
       }
     }

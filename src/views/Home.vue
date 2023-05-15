@@ -2,7 +2,7 @@
   <a-layout class="home">
     <a-layout-header>
       <div>
-        <div>找工作timeline</div>
+        <div style="font-weight:bold;font-size:16px">OfferTimeline</div>
         <div>tb74***2542</div>
       </div>
     </a-layout-header>
