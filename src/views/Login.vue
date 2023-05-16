@@ -183,12 +183,16 @@ export default {
     ...mapMutations({
       SET_NAME: "user/SET_NAME",
     }),
+    ...mapActions({
+      login: "user/login",
+    }),
     handleSubmit(e) {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
           console.log("Received values of form: ", values);
-          this.$router.push("/home");
+          this.login()
+          // this.$router.push("/home");
         }
       });
     },
@@ -197,10 +201,6 @@ export default {
       this.registerForm.validateFields((err, values) => {
         if (!err) {
           console.log("Received values of form: ", values);
-          console.log("ahaha");
-          console.log("lalala", this.username, this.userNameId);
-          this.SET_NAME("ydl");
-          console.log("lueluelue", this.username, this.userNameId);
         }
       });
     },
