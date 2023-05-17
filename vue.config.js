@@ -2,6 +2,13 @@ module.exports = {
   css: {
     loaderOptions: {
       less: {
+        // If you are using less-loader@5 please spread the lessOptions to options directly
+        modifyVars: {
+          "primary-color": "#78ba65",
+          "link-color": "#1890ff",
+          "border-radius-base": "6px",
+          "@success-color": "#78ba65"
+        },
         javascriptEnabled: true,
       },
     },
