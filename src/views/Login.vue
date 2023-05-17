@@ -171,7 +171,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["userNameId", "username"]),
+    ...mapGetters(["isLogined"]),
   },
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: "normal_login" });
@@ -191,9 +191,9 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          console.log("Received values of form: ", values);
-          this.login()
-          // this.$router.push("/home");
+          this.login(values).then(() => {
+            this.$router.push('/home')
+          })
         }
       });
     },
@@ -201,7 +201,11 @@ export default {
       e.preventDefault();
       this.registerForm.validateFields((err, values) => {
         if (!err) {
-          this.register(values);
+          this.register(values).then((res) => {
+            if (res === 1) {
+              this.page = "login";
+            }
+          });
         }
       });
     },

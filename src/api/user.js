@@ -2,7 +2,7 @@ import base from './base'
 import axios from '../request/http';
 import qs from "qs"; 
 
-const baseUrl = `${base.dev}/user`
+const baseUrl = `${base.fox}/user`
 
 const user = {
   articleList() {
@@ -13,8 +13,8 @@ const user = {
       params: params,
     });
   },
-  login(params) {
-    return axios.post(`${base.sq}/accesstoken`, qs.stringify(params));
+  login(data) {
+    return axios.post(`${baseUrl}/login`, qs.stringify(data));
   },
   register(data) {
     return axios.post(`${baseUrl}/register`, qs.stringify(data))

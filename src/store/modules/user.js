@@ -2,18 +2,14 @@ import api from "../../api/index";
 import { message } from "ant-design-vue";
 
 const state = {
-  username: "xiaoming",
-  userid: -1,
+  userInfo: {},
   token: null,
   isLogined: false,
 };
 
 const mutations = {
-  SET_NAME: (state, data = "") => {
-    state.username = data;
-  },
-  SET_ID: (state, data = 0) => {
-    state.userid = data;
+  SET_INFO: (state, data = "") => {
+    state.userInfo = data;
   },
   SET_TOKEN: (state, data) => {
     state.token = data;
@@ -24,12 +20,19 @@ const mutations = {
 };
 
 const actions = {
-  changeId({ commit }, data = Number) {
-    commit("SET_ID", data);
-  },
   login({ commit }, loginForm) {
-    api.user.articleList().then((res) => {
-      console.log("这里是回调", res);
+    return new Promise((resolve, reject) => {
+      api.user.login(loginForm).then((res) => {
+        if (res.code) {
+          commit("SET_TOKEN", res.token);
+          commit("SET_ISLOGINED", true);
+          message.success("登录成功");
+          resolve()
+        } else {
+          message.error("登录失败，请重试");
+          reject()
+        }
+      });
     });
   },
   register({ commit }, registerForm) {
@@ -37,10 +40,15 @@ const actions = {
       username: registerForm.userName,
       password: registerForm.password,
     };
-    api.user.register(registerData).then((res) => {
-      if (res.code !== 0) {
-        message.success('注册成功')
-      }
+    return new Promise((resolve, reject) => {
+      api.user.register(registerData).then((res) => {
+        if (res.code) {
+          message.success("注册成功，返回登录");
+        } else {
+          message.error("注册出现了一些问题，请重试");
+        }
+        resolve(res.code);
+      });
     });
   },
 };
