@@ -39,7 +39,6 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log('看看路由', to);
   const { isAuth } = to.meta;
   const isLogined = store.state.user.isLogined;
   if (isAuth) {

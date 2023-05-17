@@ -42,8 +42,7 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (res) => {
-    console.log('相应蓝吉骐', res);
-    return res.status === 200 ? Promise.resolve(res.data) : Promise.reject(res);
+    return (res.status+'').startsWith('2') ? Promise.resolve(res.data) : Promise.reject(res);
   },
   (err) => {
     const { response } = error;

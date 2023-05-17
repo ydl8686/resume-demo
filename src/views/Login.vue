@@ -185,6 +185,7 @@ export default {
     }),
     ...mapActions({
       login: "user/login",
+      register: "user/register",
     }),
     handleSubmit(e) {
       e.preventDefault();
@@ -200,7 +201,7 @@ export default {
       e.preventDefault();
       this.registerForm.validateFields((err, values) => {
         if (!err) {
-          console.log("Received values of form: ", values);
+          this.register(values);
         }
       });
     },
