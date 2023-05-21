@@ -146,6 +146,33 @@
             </a-input>
           </a-form-item>
           <a-form-item>
+            <a-row :gutter="8">
+              <a-col :span="16">
+                <a-input
+                  placeholder="请输入验证码"
+                  v-decorator="[
+                    'captcha',
+                    {
+                      rules: [
+                        {
+                          required: true,
+                          message: '验证码为必填项!',
+                        },
+                      ],
+                    },
+                  ]"
+                />
+              </a-col>
+              <a-col :span="6">
+                <img
+                  :src="codeUrl"
+                  style="margin-top: -5px; cursor: pointer"
+                  @click="resetCode"
+                />
+              </a-col>
+            </a-row>
+          </a-form-item>
+          <a-form-item>
             <a-button
               type="primary"
               html-type="submit"
@@ -164,10 +191,12 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
+const url = "api/user/code";
 export default {
   data() {
     return {
       page: "login",
+      codeUrl: "api/user/code",
     };
   },
   computed: {
@@ -192,8 +221,8 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           this.login(values).then(() => {
-            this.$router.push('/home')
-          })
+            this.$router.push("/home");
+          });
         }
       });
     },
@@ -201,9 +230,12 @@ export default {
       e.preventDefault();
       this.registerForm.validateFields((err, values) => {
         if (!err) {
+          console.log('注册表单有没有验证码', values);
           this.register(values).then((res) => {
             if (res === 1) {
               this.page = "login";
+            } else {
+              this.resetCode();
             }
           });
         }
@@ -222,6 +254,9 @@ export default {
     },
     toLogin() {
       this.page = "login";
+    },
+    resetCode() {
+      this.codeUrl = url + "?" + Math.random();
     },
   },
 };
@@ -287,7 +322,7 @@ export default {
     background: #fff;
     border-radius: 4px;
     width: 360px;
-    height: 380px;
+    height: 430px;
     padding: 20px;
     display: flex;
     flex-direction: column;

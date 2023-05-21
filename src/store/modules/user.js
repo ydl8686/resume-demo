@@ -39,13 +39,14 @@ const actions = {
     const registerData = {
       username: registerForm.userName,
       password: registerForm.password,
+      captcha: registerForm.captcha,
     };
     return new Promise((resolve, reject) => {
       api.user.register(registerData).then((res) => {
         if (res.code) {
-          message.success("注册成功，返回登录");
+          message.success(res.message);
         } else {
-          message.error("注册出现了一些问题，请重试");
+          message.error(res.message);
         }
         resolve(res.code);
       });
